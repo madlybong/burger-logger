@@ -5,7 +5,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NPM Version](https://img.shields.io/npm/v/@astrake/burger-logger.svg)](https://www.npmjs.com/package/@astrake/burger-logger)
 [![Coverage](https://img.shields.io/badge/Coverage-99%25-brightgreen)](https://github.com/madlybong/burger-logger)
-[![Publish](https://github.com/madlybong/burger-logger/actions/workflows/publish.yml/badge.svg)](https://github.com/madlybong/burger-logger/actions/workflows/publish.yml)
 
 A **fast, async, non-blocking logger** optimized for Bun runtime. Built with TypeScript for seamless integration in Bun servers, APIs, or standalone scripts. Supports structured JSON logging, automatic file rotation (by size or time), colorized console output, and middleware for Bun's native `serve`. Zero dependencies, ~5KB minified.
 
@@ -44,7 +43,7 @@ const logger = new BunLogger({
 
 logger.info('App started! 🚀');
 logger.info({ event: 'user_login', userId: 123 });
-logger.error('Something went wrong', { code: 500 });
+logger.error('Something went wrong', { code: 500});
 
 // Graceful flush on exit
 await logger.flush();
@@ -73,8 +72,8 @@ serve({
 
 **Output Example (Structured JSON)**:
 ```json
-{"timestamp":"2025-10-15T12:34:56.789Z","level":"INFO","message":{"endpoint":"/api/users","method":"GET"}}
-{"timestamp":"2025-10-15T12:34:57.012Z","level":"ERROR","message":{"error":"Test error"}}
+{"timestamp":"2025-10-15T09:53:23.456Z","level":"INFO","message":{"endpoint":"/api/users","method":"GET"}}
+{"timestamp":"2025-10-15T09:53:23.789Z","level":"ERROR","message":{"error":"Test error"}}
 ```
 
 ## Configuration
@@ -114,8 +113,8 @@ Full types exported for IDE support.
 - `bun run test`: Run tests with coverage + typecheck.
 - `bun run test:watch`: Watch mode for tests.
 - `bun run dev`: Alias for test:watch.
-- `npm run version:patch/minor/major`: Bump version and push tags.
-- `npm run publish`: Test, build, and publish to npm.
+- `npm run version:patch/minor/major`: Bump version.
+- `bun run publish`: Automate version bump, test, build, and publish to npm.
 
 ## Development
 Clone and setup:
@@ -157,7 +156,7 @@ Contributions are **very welcome**! burger-logger is in early stages—help make
 Join the conversation on GitHub Issues or Discussions!
 
 ## License
-MIT © astrake (2025). See [LICENSE](LICENSE) for details.
+MIT © madlybong (2025). See [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
 - Built on Bun's blazing-fast runtime.
