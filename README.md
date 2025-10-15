@@ -1,4 +1,4 @@
-# @astrake/burger-logger
+# 🍔 @astrake/burger-logger
 
 [![Bun](https://img.shields.io/badge/Bun-%3E=1.3-green?style=flat&logo=bun)](https://bun.sh)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=flat&logo=typescript)](https://www.typescriptlang.org)
@@ -6,30 +6,43 @@
 [![NPM Version](https://img.shields.io/npm/v/@astrake/burger-logger.svg)](https://www.npmjs.com/package/@astrake/burger-logger)
 [![Coverage](https://img.shields.io/badge/Coverage-99%25-brightgreen)](https://github.com/madlybong/burger-logger)
 
-A **fast, async, non-blocking logger** optimized for Bun runtime. Built with TypeScript for seamless integration in Bun servers, APIs, or standalone scripts. Supports structured JSON logging, automatic file rotation (by size or time), colorized console output, and middleware for Bun's native `serve`. Zero dependencies, ~5KB minified.
+> A **fast, async, non-blocking logger** optimized for the [Bun](https://bun.sh) runtime.  
+> Written in TypeScript, designed for structured logs, file rotation, and high throughput.  
+> Perfect companion for APIs, servers, and frameworks like your burger-framework! 🍟
 
-Inspired by Winston but leaner and Bun-native – perfect for high-throughput apps like your burger-framework! 🍔
+Zero dependencies, ~5 KB minified.
 
-## Features
-- **Log Levels**: Debug, Info, Warn, Error (configurable via options/env).
-- **Outputs**: Console (with ANSI colors in debug mode) + File appending.
-- **Structured Logging**: JSON format with timestamps, levels, and metadata objects.
-- **Rotation**: Automatic by file size (MB) or interval (days, e.g., '1d'). Keeps N rotated files.
-- **Non-Blocking**: Queue-based async writes to avoid event loop stalls.
-- **Bun Integration**: Middleware for `serve` to log requests/responses/errors/durations.
-- **Config**: Options object or env vars (e.g., `LOG_LEVEL=debug`).
-- **Tested**: 99%+ coverage with Bun's test runner.
+---
 
-## Installation
+## ✨ Features
+
+- **Log Levels:** `debug`, `info`, `warn`, `error`
+- **Outputs:** Console (colorized) + File
+- **Structured JSON:** Timestamped logs with metadata
+- **Rotation:** Auto by file size or interval (e.g., `10MB`, `1d`)
+- **Non-blocking:** Queued async writes — zero event-loop blocking
+- **Middleware:** Plug directly into Bun’s native `serve`
+- **Configurable:** Use options or env vars
+- **Tested:** > 99 % coverage using Bun’s test runner
+- **Type-safe:** Fully typed API and constructor options
+
+---
+
+## 🧩 Installation
+
 ```bash
 bun add @astrake/burger-logger
 ```
 
-Requires Bun >=1.3.0.
+Requires **Bun ≥ 1.3.0**
 
-## Quick Start
+---
+
+## 🚀 Quick Start
+
 ### Standalone Logger
-```typescript
+
+```ts
 import { BunLogger } from '@astrake/burger-logger';
 
 const logger = new BunLogger({
@@ -38,19 +51,20 @@ const logger = new BunLogger({
   filePath: './logs/app.log',
   structured: true,
   rotationSizeMB: 10,
-  rotationInterval: '1d', // or 1 for 1 day
+  rotationInterval: '1d',
 });
 
-logger.info('App started! 🚀');
+logger.info('App started 🚀');
 logger.info({ event: 'user_login', userId: 123 });
-logger.error('Something went wrong', { code: 500});
+logger.error('Something went wrong', { code: 500 });
 
-// Graceful flush on exit
+// Graceful shutdown
 await logger.flush();
 ```
 
-### With Bun Server (Middleware)
-```typescript
+### Middleware for Bun Server
+
+```ts
 import { serve } from 'bun';
 import { BunLogger } from '@astrake/burger-logger';
 
@@ -65,33 +79,37 @@ serve({
   fetch: logger.middleware(async (req) => {
     logger.info({ endpoint: req.url, method: req.method });
     if (req.url.endsWith('/error')) throw new Error('Test error');
-    return new Response('Burger served! 🍔');
+    return new Response('Burger served 🍔');
   }),
 });
 ```
 
-**Output Example (Structured JSON)**:
+#### Example (Structured JSON Output)
 ```json
 {"timestamp":"2025-10-15T09:53:23.456Z","level":"INFO","message":{"endpoint":"/api/users","method":"GET"}}
 {"timestamp":"2025-10-15T09:53:23.789Z","level":"ERROR","message":{"error":"Test error"}}
 ```
 
-## Configuration
-Pass options to the constructor or use env vars (env overrides options).
+---
 
-| Option              | Type                  | Default       | Description |
-|---------------------|-----------------------|---------------|-------------|
-| `logLevel`         | `'debug' \| 'info' \| 'warn' \| 'error'` | `'info'`     | Minimum level to log. |
-| `logToConsole`     | `boolean`            | `true`       | Output to console. |
-| `logToFile`        | `boolean`            | `false`      | Append to file. |
-| `filePath`         | `string`             | `'./app.log'`| Log file path. |
-| `rotationSizeMB`   | `number`             | `10`         | Rotate when > N MB. |
-| `rotationInterval` | `string \| number`   | `0` (disabled)| Rotate after N days ('1d' or 1). |
-| `rotationCount`    | `number`             | `5`          | Max rotated files to keep. |
-| `structured`       | `boolean`            | `false`      | JSON output (vs. plain text). |
+## ⚙️ Configuration
 
-**Env Vars** (e.g., in `.env` or shell):
-```
+Use constructor options or environment variables (env vars override options).
+
+| Option              | Type                              | Default        | Description |
+|---------------------|-----------------------------------|----------------|--------------|
+| `logLevel`          | `'debug' \| 'info' \| 'warn' \| 'error'` | `'info'` | Minimum level to log |
+| `logToConsole`      | `boolean`                         | `true`         | Output to console |
+| `logToFile`         | `boolean`                         | `false`        | Append logs to file |
+| `filePath`          | `string`                          | `'./app.log'`  | Path to log file |
+| `rotationSizeMB`    | `number`                          | `10`           | Rotate after N MB |
+| `rotationInterval`  | `string \| number`                | `0`            | Rotate after N days (e.g., `'1d'` or `1`) |
+| `rotationCount`     | `number`                          | `5`            | Keep N rotated files |
+| `structured`        | `boolean`                         | `false`        | Enable JSON output |
+
+### Environment Variables
+
+```bash
 LOG_LEVEL=debug
 LOG_TO_FILE=true
 LOG_FILE_PATH=./logs/custom.log
@@ -100,68 +118,119 @@ LOG_ROTATION_INTERVAL=1d
 LOG_STRUCTURED=true
 ```
 
-## API Reference
-- `logger.debug/info/warn/error(msg: string | LogMessage)`: Log at level (async, fire-and-forget).
-- `await logger.flush()`: Await queue processing (use on shutdown).
-- `logger.middleware(fetchHandler)`: Wrap Bun fetch for auto-logging (req/url/status/duration/errors).
+---
 
-Full types exported for IDE support.
+## 🧠 API Reference
 
-## Scripts
-- `bun run build`: Compile TypeScript to `dist/`.
-- `bun run typecheck`: Run TypeScript checks without emitting.
-- `bun run test`: Run tests with coverage + typecheck.
-- `bun run test:watch`: Watch mode for tests.
-- `bun run dev`: Alias for test:watch.
-- `npm run version:patch/minor/major`: Bump version.
-- `bun run publish`: Automate version bump, test, build, and publish to npm.
+- `logger.debug/info/warn/error(message: string | LogMessage)`  
+  Async fire-and-forget logging.
+- `await logger.flush()`  
+  Await all pending writes before shutdown.
+- `logger.middleware(fetchHandler)`  
+  Wraps a Bun `fetch` handler for automatic request/response/error logging.
 
-## Development
-Clone and setup:
+Types are fully exported for IDE auto-completion.
+
+---
+
+## 🧰 Scripts
+
+| Command | Description |
+|----------|--------------|
+| `bun run build` | Compile TypeScript to `dist/` |
+| `bun run typecheck` | Run type checks only |
+| `bun run test` | Run tests with coverage |
+| `bun run test:watch` | Watch mode for tests |
+| `bun run dev` | Alias for `test:watch` |
+| `npm run version:patch/minor/major` | Version bump utilities |
+| `bun run release` | Full automated test + build + publish flow |
+
+---
+
+## 🧱 Releasing a new version
+
+Automate testing, building, versioning, and publishing with one command.
+
+```bash
+bun run release
+```
+
+This will:
+
+- Run all tests and type checks  
+- Build the project  
+- Bump the patch version  
+- Commit the change  
+- Publish to npm (with `--ignore-scripts` to prevent recursion)  
+- Create a Git tag `vX.Y.Z` and push with `--follow-tags`
+
+To preview contents before publishing:
+
+```bash
+npm publish --dry-run
+```
+
+---
+
+## 🧑‍💻 Development
+
 ```bash
 git clone https://github.com/madlybong/burger-logger
 cd burger-logger
 bun install
 ```
 
-- **Build**: `bun run build` (outputs to `dist/`).
-- **Typecheck**: `bun run typecheck` (strict TS validation).
-- **Test**: `bun test --coverage` (runs tests + coverage).
-- **Watch**: `bun run dev`.
+Run commands:
 
-Uses Bun's built-in test runner; no extras needed.
+```bash
+bun run build
+bun run typecheck
+bun test --coverage
+```
 
-## Contributing
-Contributions are **very welcome**! burger-logger is in early stages—help make it even faster and more Bun-friendly.
-
-### How to Contribute
-1. Fork the repo.
-2. Create a feature branch (`git checkout -b feat/amazing-feature`).
-3. Commit changes (`git commit -m "Add amazing feature"`).
-4. Push (`git push origin feat/amazing-feature`).
-5. Open a Pull Request.
-
-**Guidelines**:
-- Follow TypeScript strict mode.
-- Add tests for new features (aim for 95%+ coverage).
-- Update README if needed.
-- No breaking changes without discussion.
-
-**Ideas Needed**:
-- Custom transports (e.g., HTTP, DB).
-- More levels/formats (e.g., timestamps, request IDs).
-- Performance benchmarks vs. Winston/Pino.
-- Bun-specific optimizations (e.g., WebSocket logs).
-
-Join the conversation on GitHub Issues or Discussions!
-
-## License
-MIT © madlybong (2025). See [LICENSE](LICENSE) for details.
-
-## Acknowledgments
-- Built on Bun's blazing-fast runtime.
-- Inspired by Winston and Pino for core concepts.
+Uses Bun’s built-in test runner — no extra setup required.
 
 ---
 
-⭐ **Star this repo if it saves you time!** Questions? Open an issue. Let's build awesome Bun apps together! 🍔
+## 🤝 Contributing
+
+Contributions are **very welcome** — Burger Logger is early but stable.
+
+**Steps**
+
+1. Fork the repo  
+2. Create a feature branch  
+3. Commit your changes  
+4. Push and open a PR
+
+**Guidelines**
+
+- Follow strict TypeScript mode  
+- Maintain 95 %+ test coverage  
+- Update README if applicable  
+- Discuss before breaking changes  
+
+**Ideas for future work**
+
+- Custom transports (HTTP, DB, WebSocket)  
+- Correlation IDs or request-context tracing  
+- Performance benchmarks vs. Pino/Winston  
+- Log compression or daily rollovers  
+
+---
+
+## 📜 License
+
+MIT © [Anuvab Chakraborty](mailto:madlybong@gmail.com) — see [LICENSE](LICENSE)
+
+---
+
+## 🙌 Acknowledgments
+
+- Built on the lightning-fast [Bun runtime](https://bun.sh)  
+- Inspired by Winston & Pino  
+- Maintained under the **Astrake** namespace
+
+---
+
+⭐ **Star this repo** if it saved you time — let’s make Bun’s ecosystem better together! 🍔
