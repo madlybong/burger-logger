@@ -14,7 +14,7 @@
     "version:minor": "npm version minor",
     "version:major": "npm version major",
     "prepublishOnly": "bun run test && bun run build",
-    "publish": "bun run prepublishOnly && npm run version:patch && npm publish --access public && git push && git push origin v$(node -p \"require('./package.json').version\")"
+    "publish": "npm run version:patch && npm publish --access public && git push && git push origin v$(node -p \"require('./package.json').version\")"
   },
   "devDependencies": {
     "@types/bun": "latest",
