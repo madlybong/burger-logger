@@ -14,7 +14,7 @@
     "version:minor": "npm version minor",
     "version:major": "npm version major",
     "prepublishOnly": "bun run test && bun run build",
-    "publish": "npm run version:patch && npm publish --access public && git push && git push origin v$(node -p \"require('./package.json').version\")"
+    "publish": "bun scripts/publish.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -35,7 +35,7 @@
     "logging"
   ],
   "license": "MIT",
-  "author": "madlybong <your.email@example.com>",
+  "author": "madlybong <madlybong@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/madlybong/burger-logger.git"
