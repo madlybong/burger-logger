@@ -28,6 +28,9 @@ jobs:
       - name: Build package
         run: bun run build
 
+      - name: Ensure clean git working directory
+        run: git reset --hard HEAD
+
       - name: Bump version
         run: npm version patch
 
