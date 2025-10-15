@@ -1,17 +1,15 @@
-// tests/logger.test.ts
-
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { BunLogger } from "../src/index";
 import { mkdir, rm, writeFile, readFile } from "fs/promises";
-import { join } from "path";
+import { join, dirname } from "path";
 
 let tempDir: string;
 let logger: BunLogger;
 
 beforeEach(async () => {
   tempDir = join(process.cwd(), ".test-temp");
-  await mkdir(tempDir, { recursive: true });
   process.env.LOG_FILE_PATH = join(tempDir, "test.log");
+  await mkdir(dirname(process.env.LOG_FILE_PATH), { recursive: true });
   process.env.LOG_TO_FILE = "true";
   process.env.LOG_TO_CONSOLE = "false"; // Disable console for file tests
 });

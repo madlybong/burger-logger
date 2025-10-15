@@ -1,9 +1,7 @@
-// tests/middleware.test.ts
-
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { BunLogger } from "../src/index";
 import { readFileSync } from "fs";
-import { join } from "path";
+import { join, dirname } from "path";
 import { mkdir, rm } from "fs/promises";
 
 describe("Middleware", () => {
@@ -26,6 +24,7 @@ describe("Middleware", () => {
       logLevel: "info" as const,
       filePath: logPath,
     });
+    await mkdir(dirname(logPath), { recursive: true });
     const fetch = async () => new Response("ok", { status: 200 });
     const middleware = logger.middleware(fetch);
     await middleware(new Request("http://localhost/test"));
@@ -46,6 +45,7 @@ describe("Middleware", () => {
       logLevel: "error" as const,
       filePath: logPath,
     });
+    await mkdir(dirname(logPath), { recursive: true });
     const fetch = async () => {
       throw new Error("handler fail");
     };
