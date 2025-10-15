@@ -1,6 +1,6 @@
 {
   "name": "@astrake/burger-logger",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Fast async non-blocking logger for Bun",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
