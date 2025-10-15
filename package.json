@@ -1,5 +1,5 @@
 {
-  "name": "burger-logger",
+  "name": "@astrake/burger-logger",
   "version": "0.0.1",
   "description": "Fast async non-blocking logger for Bun",
   "main": "dist/index.js",
@@ -7,13 +7,18 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "test": "bun test --coverage && tsc --noEmit",
-    "test:watch": "bun test --watch"
+    "test": "bun test --coverage && bun run typecheck",
+    "test:watch": "bun test --watch",
+    "dev": "bun run test:watch",
+    "version:patch": "npm version patch && git push --follow-tags",
+    "version:minor": "npm version minor && git push --follow-tags",
+    "version:major": "npm version major && git push --follow-tags",
+    "prepublishOnly": "bun run test && bun run build",
+    "postversion": "git push && git push --tags",
+    "publish": "npm publish --access public"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/jest": "^29.5.14",
     "typescript": "^5.0.0"
   },
   "peerDependencies": {
@@ -25,7 +30,18 @@
   "keywords": [
     "bun",
     "logger",
-    "typescript"
+    "typescript",
+    "async",
+    "logging"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "author": "madlybong <madlybong@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madlybong/burger-logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/madlybong/burger-logger/issues"
+  },
+  "homepage": "https://github.com/madlybong/burger-logger#readme"
 }
