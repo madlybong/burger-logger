@@ -1,9 +1,9 @@
-# burger-logger
+# @astrake/burger-logger
 
 [![Bun](https://img.shields.io/badge/Bun-%3E=1.3-green?style=flat&logo=bun)](https://bun.sh)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=flat&logo=typescript)](https://www.typescriptlang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![NPM Version](https://img.shields.io/npm/v/burger-logger.svg)](https://www.npmjs.com/package/burger-logger)
+[![NPM Version](https://img.shields.io/npm/v/@astrake/burger-logger.svg)](https://www.npmjs.com/package/@astrake/burger-logger)
 [![Coverage](https://img.shields.io/badge/Coverage-99%25-brightgreen)](https://github.com/madlybong/burger-logger)
 [![Publish](https://github.com/madlybong/burger-logger/actions/workflows/publish.yml/badge.svg)](https://github.com/madlybong/burger-logger/actions/workflows/publish.yml)
 
@@ -23,7 +23,7 @@ Inspired by Winston but leaner and Bun-native – perfect for high-throughput ap
 
 ## Installation
 ```bash
-bun add burger-logger
+bun add @astrake/burger-logger
 ```
 
 Requires Bun >=1.3.0.
@@ -31,7 +31,7 @@ Requires Bun >=1.3.0.
 ## Quick Start
 ### Standalone Logger
 ```typescript
-import { BunLogger } from 'burger-logger';
+import { BunLogger } from '@astrake/burger-logger';
 
 const logger = new BunLogger({
   logLevel: 'debug',
@@ -53,7 +53,7 @@ await logger.flush();
 ### With Bun Server (Middleware)
 ```typescript
 import { serve } from 'bun';
-import { BunLogger } from 'burger-logger';
+import { BunLogger } from '@astrake/burger-logger';
 
 const logger = new BunLogger({
   logToFile: true,
@@ -157,7 +157,7 @@ Contributions are **very welcome**! burger-logger is in early stages—help make
 Join the conversation on GitHub Issues or Discussions!
 
 ## License
-MIT © madlybong (2025). See [LICENSE](LICENSE) for details.
+MIT © astrake (2025). See [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
 - Built on Bun's blazing-fast runtime.

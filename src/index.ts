@@ -1,7 +1,6 @@
-// src/index.ts
-
 import { promises as fs } from "fs";
 import process from "process";
+import { dirname } from "path";
 
 export interface LoggerOptions {
   logLevel?: "debug" | "info" | "warn" | "error";
@@ -87,6 +86,8 @@ export class BunLogger {
     this.isProcessing = true;
 
     try {
+      // Ensure directory exists
+      await fs.mkdir(dirname(this.filePath), { recursive: true });
       while (this.queue.length > 0) {
         const message = this.queue.shift()!;
         await this.rotateIfNeeded();

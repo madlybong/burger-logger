@@ -1,6 +1,6 @@
 {
   "name": "@astrake/burger-logger",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Fast async non-blocking logger for Bun",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,8 +13,8 @@
     "version:patch": "npm version patch && git push --follow-tags",
     "version:minor": "npm version minor && git push --follow-tags",
     "version:major": "npm version major && git push --follow-tags",
-    "postversion": "git push && git push --tags",
     "prepublishOnly": "bun run test && bun run build",
+    "postversion": "git push && git push --tags",
     "publish": "npm publish --access public"
   },
   "devDependencies": {
@@ -25,7 +25,8 @@
     "bun": "^1.3.0"
   },
   "files": [
-    "dist"
+    "dist/index.js",
+    "dist/index.d.ts"
   ],
   "keywords": [
     "bun",
@@ -35,7 +36,7 @@
     "logging"
   ],
   "license": "MIT",
-  "author": "madlybong <madlybong@gmail.com>",
+  "author": "madlybong <your.email@example.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/madlybong/burger-logger.git"
